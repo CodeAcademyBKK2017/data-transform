@@ -1,5 +1,6 @@
 const url = require('url');
 const fs = require('fs');
+
 const infoJson = require('./assets/info.json');
 
 //--------------------------------------------------
@@ -7,78 +8,85 @@ const infoJson = require('./assets/info.json');
 const PAGE_NOT_FOUND = 'Page not found.';
 const WRONG_METHOD = 'WRONG METHOD';
 const USER_NOT_FOUND = 'USER NOT FOUND';
+const REQUEST_SPEC_UNDEFINED = 'REQUEST SPEC UNDEFINED';
 
 //--------------------------------------------------
 
 const requestHandler = (req, res) => {
     const method = req.method;
     const parsed = url.parse(req.url, true);
+    const pathname = parsed.pathname;
     const query = parsed.query;
     
+    //---------------------------
     // console.log('>>>>>START');
+    //---------------------------
 
-    // console.log('parsed:', parsed);
-    // console.log('pathname:', parsed.pathname);
-    // console.log('query:', query);
-    // console.log('method:', method);
+    const matchedPathnameRequestSpec = supportedReqSpec.find((element) => {
+        return element.pathname === pathname;
+    });
 
-    switch (parsed.pathname) {
-        
-        case '/first-user':{
-            if(method === 'GET') {
-                const isSort = (query.sort === 'true');
-                const firstUser = getFirstUserObject(isSort);
-                res.write(firstUser.name);
-                res.end();
-            }
-            else {
-                res.write(WRONG_METHOD);
-                res.end();
-            }
-            break;
+    if(!matchedPathnameRequestSpec) {
+        responseWithWriteMessage(res, PAGE_NOT_FOUND);
+        return;
+    }
+
+    //-----
+
+    const matchedObjRequestSpec = supportedReqSpec.find((element) => {
+        return element.method === method && element.pathname === pathname;
+    });
+
+    if(!matchedObjRequestSpec) {
+        responseWithWriteMessage(res, WRONG_METHOD);
+        return;
+    }
+    
+    //-----
+    
+    // switch (matchedObjRequestSpec) {
+    {
+        // case {method: 'GET', pathname: '/first-user'}:{
+        if(matchedObjRequestSpec.method === 'GET' && matchedObjRequestSpec.pathname === '/first-user') {
+            const isSortAsc = (query.sort === 'true');
+            getFirstUserApi(isSortAsc, res);
+            // break;
         }
-        case '/user-data':{
-            if(method === 'GET') {
-                const user = getUserWithName(query.user);
-                if(user) {
-                    const userFilePath = `./assets/data/${user.dataFile}`;
-                    const data = fs.readFileSync(userFilePath, 'utf8');
-                    res.write(data);
-                    res.end();
-                }
-                else {
-                    res.write(USER_NOT_FOUND);
-                    res.end();
-                }
-                // const userFileName = `${query.user}.txt`.toLowerCase();
-                // const userFilePath = `./assets/data/${userFileName}`;
-                // fs.readFile(userFilePath, 'utf8', (err, data) => {
-                //     if (err) {
-                //         // throw err;
-
-                //         res.write(USER_NOT_FOUND);
-                //         res.end();
-                //     }
-                //     else {
-                //         res.write(data);
-                //         res.end();
-                //     }
-                // });
-            }
-            else {
-                res.write(WRONG_METHOD);
-                res.end();
-            }
-            break;
+        // case {method: 'GET', pathname: '/user-data'}:{
+        else if(matchedObjRequestSpec.method === 'GET' && matchedObjRequestSpec.pathname === '/user-data') {
+            getUserDataApi(query.user, res);
+            // break;
         }
-        default:{
-            res.write(PAGE_NOT_FOUND);
-            res.end();
-            break;
+        // default:{
+        else {
+            responseWithWriteMessage(res, REQUEST_SPEC_UNDEFINED);
+            // break;
         }
     }
+    
+    //-------------------------
     // console.log('<<<<<END');
+    //-------------------------
 }
+
+//--------------------------------------------------
+
+function RequestSpec(method, pathname) {
+    this.method = method;
+    this.pathname = pathname;
+}
+
+const supportedReqSpec = [
+    new RequestSpec('GET', '/first-user'),
+    new RequestSpec('GET', '/user-data')
+];
+
+const responseWithWriteMessage = (response, message) => {
+    response.write(message);
+    response.end();
+}
+
+//-----
 
 const getFirstUserObject = (isSortAsc) => {
     const originalUserArray = infoJson.data;
@@ -93,7 +101,14 @@ const getFirstUserObject = (isSortAsc) => {
     return tempUserArray[0];
 }
 
-const getUserWithName = (name) => {
+const getFirstUserApi = (isSortAsc, res) => {
+    const firstUser = getFirstUserObject(isSortAsc);
+    responseWithWriteMessage(res, firstUser.name);
+}
+
+//-----
+
+const getUserDataWithName = (name) => {
     const originalUserArray = infoJson.data;
     const matchedUser = originalUserArray.find((user) => {
         return user.name === name;
@@ -101,6 +116,20 @@ const getUserWithName = (name) => {
 
     return matchedUser;
 }
+
+const getUserDataApi = (name, res) => {
+    const user = getUserDataWithName(name);
+    if(user) {
+        const userFilePath = `./assets/data/${user.dataFile}`;
+        const data = fs.readFileSync(userFilePath, 'utf8');
+        responseWithWriteMessage(res, data);
+    }
+    else {
+        responseWithWriteMessage(res, USER_NOT_FOUND);
+    }
+}
+
+//--------------------------------------------------
 
 module.exports = {
     requestHandler,
