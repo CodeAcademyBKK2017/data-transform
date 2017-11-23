@@ -19,5 +19,4 @@ Expected Response
 
 "John"
 
-
 > __Note:__ Use `POSTMAN` for testing the APIs and `nodemon` for fast development
