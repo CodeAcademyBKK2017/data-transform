@@ -1,5 +1,6 @@
 const API = require('../index')
 
+
 test('API first-user is called', () => {
     const req = {
         url:"/first-user/",
@@ -15,60 +16,6 @@ test('API first-user is called', () => {
     
     expect(res.write).toHaveBeenCalled();
     expect(res.write).toBeCalledWith("Teresa");
-    expect(res.end).toHaveBeenCalled();
-})
-
-test('API first-user is called use with Post', () => {
-    const req = {
-        url:"/first-user/",
-        method:"POST"
-    }
-
-    const res ={
-        write:jest.fn(),
-        end:jest.fn()
-    }
-
-    API(req,res);
-    
-    expect(res.write).toHaveBeenCalled();
-    expect(res.write).toBeCalledWith("GET ONLY!");
-    expect(res.end).toHaveBeenCalled();
-})
-
-test('API first-user is called with sort = false', () => {
-    const req = {
-        url:"/first-user/?sort=false",
-        method:"GET"
-    }
-
-    const res ={
-        write:jest.fn(),
-        end:jest.fn()
-    }
-
-    API(req,res);
-    
-    expect(res.write).toHaveBeenCalled();
-    expect(res.write).toBeCalledWith("Teresa");
-    expect(res.end).toHaveBeenCalled();
-})
-
-test('API first-user is called with sort = false With POST', () => {
-    const req = {
-        url:"/first-user/?sort=false",
-        method:"POST"
-    }
-
-    const res ={
-        write:jest.fn(),
-        end:jest.fn()
-    }
-
-    API(req,res);
-    
-    expect(res.write).toHaveBeenCalled();
-    expect(res.write).toBeCalledWith("GET ONLY!");
     expect(res.end).toHaveBeenCalled();
 })
 
@@ -90,24 +37,6 @@ test('API first-user is called with sort = true', () => {
     expect(res.end).toHaveBeenCalled();
 })
 
-test('API first-user is called with sort = true Wiht POST', () => {
-    const req = {
-        url:"/first-user/?sort=true",
-        method:"POST"
-    }
-
-    const res ={
-        write:jest.fn(),
-        end:jest.fn()
-    }
-
-    API(req,res);
-    
-    expect(res.write).toHaveBeenCalled();
-    expect(res.write).toBeCalledWith("GET ONLY!");
-    expect(res.end).toHaveBeenCalled();
-})
-
 test('API user-data is called and get Data in file', () => {
     const req = {
         url:"/user-data/?user=Teresa",
@@ -122,21 +51,17 @@ test('API user-data is called and get Data in file', () => {
     }
 
     API(req,res);
-    
+
     expect(res.write).toHaveBeenCalled();
     expect(res.write).toBeCalledWith(ans);
     expect(res.end).toHaveBeenCalled();
 })
 
-test('API user-data is called and get Data in file With Get', () => {
+test('API user-data is called and get Data in file With POST', () => {
     const req = {
         url:"/user-data/?user=Teresa",
         method:"POST"
-
     }
-
-    const ans = "GET ONLY!"
-
     const res ={
         write:jest.fn(),
         end:jest.fn()
@@ -145,6 +70,6 @@ test('API user-data is called and get Data in file With Get', () => {
     API(req,res);
     
     expect(res.write).toHaveBeenCalled();
-    expect(res.write).toBeCalledWith(ans);
+    expect(res.write).toBeCalledWith("GET ONLY!");
     expect(res.end).toHaveBeenCalled();
 })
