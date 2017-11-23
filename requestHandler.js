@@ -24,7 +24,7 @@ const requestHandler = (req, res) => {
 
     switch (parsed.pathname) {
         
-        case '/first-user':
+        case '/first-user':{
             if(method === 'GET') {
                 const isSort = (query.sort === 'true');
                 const firstUser = getFirstUserObject(isSort);
@@ -36,8 +36,8 @@ const requestHandler = (req, res) => {
                 res.end();
             }
             break;
-
-        case '/user-data':
+        }
+        case '/user-data':{
             if(method === 'GET') {
                 const user = getUserWithName(query.user);
                 if(user) {
@@ -70,11 +70,12 @@ const requestHandler = (req, res) => {
                 res.end();
             }
             break;
-        
-        default:
+        }
+        default:{
             res.write(PAGE_NOT_FOUND);
             res.end();
             break;
+        }
     }
     // console.log('<<<<<END');
 }
