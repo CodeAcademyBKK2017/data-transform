@@ -1,10 +1,11 @@
 {
   "title": "data-excercise",
-  "data": [{
-      "name": "John",
-      "dataFile": "data_john.txt",
-      "metadata": "data_john_meta.json",
-      "id": "asd12325623"
+  "data": [
+    {
+      "name": "Teresa",
+      "dataFile": "teresa.txt",
+      "metadata": "teresa_meta.json",
+      "id": "nbnm23652461"
     },
     {
       "name": "Mike",
@@ -13,10 +14,10 @@
       "id": "zxbs12616"
     },
     {
-      "name": "Teresa",
-      "dataFile": "teresa.txt",
-      "metadata": "teresa_meta.json",
-      "id": "nbnm23652461"
+      "name": "John",
+      "dataFile": "data_john.txt",
+      "metadata": "data_john_meta.json",
+      "id": "asd12325623"
     },
     {
       "name": "Stuart",
