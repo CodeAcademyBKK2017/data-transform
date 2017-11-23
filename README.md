@@ -19,7 +19,7 @@ Expected Response
 
 "John"
 
-## Exercise 3:
+## Exercise 3: Searching userData and read file
 
 GET /user-data/?user="Teresa"
 > The API will find the datafile for the passed user from `info.json` (`teresa.txt`)
