@@ -58,7 +58,7 @@ test('Exercise 2: read first user with sort: Failure', function() {
     }
     reqHand.requestHandler(request, response);
 
-    expect(response.write).toHaveBeenCalledWith('Teresa');
+    expect(response.write).not.toHaveBeenCalledWith('John');
     expect(response.end).toHaveBeenCalled();
 });
 
