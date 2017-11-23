@@ -39,20 +39,31 @@ const requestHandler = (req, res) => {
 
         case '/user-data':
             if(method === 'GET') {
-                const userFileName = `${query.user}.txt`.toLowerCase();
-                const userFilePath = `./assets/data/${userFileName}`;
-                fs.readFile(userFilePath, 'utf8', (err, data) => {
-                    if (err) {
-                        // throw err;
+                const user = getUserWithName(query.user);
+                if(user) {
+                    const userFilePath = `./assets/data/${user.dataFile}`;
+                    const data = fs.readFileSync(userFilePath, 'utf8');
+                    res.write(data);
+                    res.end();
+                }
+                else {
+                    res.write(USER_NOT_FOUND);
+                    res.end();
+                }
+                // const userFileName = `${query.user}.txt`.toLowerCase();
+                // const userFilePath = `./assets/data/${userFileName}`;
+                // fs.readFile(userFilePath, 'utf8', (err, data) => {
+                //     if (err) {
+                //         // throw err;
 
-                        res.write(USER_NOT_FOUND);
-                        res.end();
-                    }
-                    else {
-                        res.write(data);
-                        res.end();
-                    }
-                });
+                //         res.write(USER_NOT_FOUND);
+                //         res.end();
+                //     }
+                //     else {
+                //         res.write(data);
+                //         res.end();
+                //     }
+                // });
             }
             else {
                 res.write(WRONG_METHOD);
@@ -82,16 +93,12 @@ const getFirstUserObject = (isSortAsc) => {
 }
 
 const getUserWithName = (name) => {
-    // const originalUserArray = infoJson.data;
-    // const tempUserArray = [...originalUserArray];
+    const originalUserArray = infoJson.data;
+    const matchedUser = originalUserArray.find((user) => {
+        return user.name === name;
+    });
 
-    // if(isSortAsc) {
-    //     tempUserArray.sort((obj1, obj2) => {
-    //         return obj1.name > obj2.name;
-    //     });
-    // }
-    
-    // return tempUserArray[0];
+    return matchedUser;
 }
 
 module.exports = {
