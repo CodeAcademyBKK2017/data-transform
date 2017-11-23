@@ -46,6 +46,15 @@ test('GET: /user-data?user=teresa - Get User data with ignore case.', () => {
 });
 
 // Failure case
+test('GET: /unknow-url - Should be response URL not found.', () => {
+    const res = { write: jest.fn(), end: jest.fn() };
+    const req = { url: '/unknow-url', method: 'GET' };
+
+    requestHandler(req, res);
+    expect(res.write).toHaveBeenCalledWith('URL not found.');
+    expect(res.end).toHaveBeenCalled();
+});
+
 test('POST: /first-user - Should be response nothing', () => {
     const res = { write: jest.fn(), end: jest.fn() };
     const req = { url: '/first-user', method: 'POST' };
