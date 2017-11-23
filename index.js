@@ -23,3 +23,23 @@ Expected Response
 
 > __Note:__ Use `POSTMAN` for testing the APIs and `nodemon` for fast development
 */
+const compareName = (a,b)=>{
+    var nameA = a.name.toUpperCase(); // ignore upper and lowercase
+    var nameB = b.name.toUpperCase(); // ignore upper and lowercase
+    if (nameA < nameB) {
+      return -1;
+    }
+    if (nameA > nameB) {
+      return 1;
+    }
+  }
+const info = require('./assets/info.json');
+const firstNameAPI = ()=>{
+  const alldata = info.data;
+  const userData = alldata[0] // alldata.slice(0,1) 
+  const userName = userData.name
+  console.log(alldata.sort(compareName))
+  return userName;
+}
+ firstNameAPI();
+module.exports = firstNameAPI;
