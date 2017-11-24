@@ -19,5 +19,21 @@ Expected Response
 
 "John"
 
+## Exercise 3: Searching userData and read file
+
+GET /user-data/?user="Teresa"
+> The API will find the datafile for the passed user from `info.json` (`teresa.txt`)
+> After getting the data file, the API will read the data file and return the data as the response.
+
+Expected Response:
+
+```
+This contains metadata for TERESA
+Sample data for TERESA
+67 53 98 23 121
+12 23 43 12 45
+```
+
+
 
 > __Note:__ Use `POSTMAN` for testing the APIs and `nodemon` for fast development
