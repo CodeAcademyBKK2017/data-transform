@@ -1,4 +1,4 @@
 const http = require('http');
-const index = require('./index');
+const router = require('./router');
 
-http.createServer(index).listen(3008);
+http.createServer(router).listen(3008);
