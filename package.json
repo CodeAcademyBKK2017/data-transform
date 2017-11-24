@@ -14,6 +14,7 @@
     "jest": "^21.2.1"
   },
   "dependencies": {
+    "nodemon": "^1.12.1",
     "request": "^2.83.0"
   },
   "jest": {
