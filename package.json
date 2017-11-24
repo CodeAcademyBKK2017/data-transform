@@ -5,13 +5,15 @@
     "main": "index.js",
     "scripts": {
         "start": "nodemon server.js",
-        "test": "jest --coverage",
+        "test": "jest --coverage && npm run lint",
+        "lint": "eslint *.js",
         "test:watch": "jest --watchall"
     },
     "author": "",
     "license": "ISC",
     "devDependencies": {
         "jest": "^21.2.1",
-        "nodemon": "^1.12.1"
+        "nodemon": "^1.12.1",
+        "eslint": "^4.11.0"
     }
 }
