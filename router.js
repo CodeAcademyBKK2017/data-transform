@@ -23,7 +23,7 @@ const router = (req, res) => {
         }
     }
 
-    res.write(output);
+    res.write(output);  
     res.end();
 }
 
