@@ -55,13 +55,6 @@ test('Test for Fail response with POST method',()=>{
 test('Test for Fail FirstUserAPI empty sort flag',()=>{
     expect(sv.firstNameAPI('')).toBe('No Data Found');    
 })
-test('Test for Fail response with wrong URL',()=>{
-    const response = {
-        write : jest.fn(),
-        end : jest.fn()
-   }
-    request.url = 'http://test.com/first-xxx/';
-    request.method = 'GET'
-    sv.router(request,response);
-    expect(response.write).toBeCalledWith('WRONG PATH NAME OR URL');
+test('Test for Fail response Get UserAPI',()=>{;
+    expect(sv.getUserAPI('xxxx')).toBe('');
 })
