@@ -1,0 +1,16 @@
+{
+    "env":{
+        "node":true,
+        "es6":true
+    },
+    "rules":{
+        "no-console":1,
+        "semi":1,
+        "indent":[2,"tab"],
+        "no-var":2,
+        "prefer-const":1,
+        "prefer-arrow-callback":2,
+        "no-extra-semi":2,
+        "no-lonely-if":2
+    }
+}

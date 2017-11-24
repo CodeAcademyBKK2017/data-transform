@@ -27,22 +27,23 @@ const http = require('http');
 const url = require('url');
 const moduler = require('./moduler');
 
-const requestHandler = (req,res) =>{
-    const parthQ = url.parse(req.url,true);
-    const URL = `${req.method}:${parthQ.pathname}`;
-    switch (URL) {
-        case 'GET:/first-user/':
-        res.write(moduler.getFristName(res,parthQ.query));
-            break;
-        case `GET:/user-data/`:
-        res.write(moduler.getDataFromFile(parthQ.query.user,res));
-            break;
-        default: 
-            res.write("GET ONLY!") 
-        break;
-    }
-    res.end();
-}
+
+const requestHandler = (req, res) => {
+	const parthQ = url.parse(req.url, true);
+	const URL = `${req.method}:${parthQ.pathname}`;
+	switch (URL) { 
+	case 'GET:/first-user/':
+		res.write(moduler.getFristName(res, parthQ.query));
+		break;
+	case `GET:/user-data/`:
+		res.write(moduler.getDataFromFile(parthQ.query.user, res));
+		break;
+	default:
+		res.write("GET ONLY!");
+		break;
+	}
+	res.end();
+};
 
 http.createServer(requestHandler).listen(3008);
 module.exports = requestHandler;
