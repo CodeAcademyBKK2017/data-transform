@@ -1,0 +1,15 @@
+{
+    "env" : {
+        "node" : true,
+        "es6" : true
+    },
+    "rules" : {
+        "no-console" : 2 , // 0-ignore 1-warning,2-error
+        "semi" : 2,
+        "indent" : [2,2],
+        "no-unused-vars" : "error",
+        "no-var" : "error",
+        "prefer-const" : "error",
+        "prefer-arrow-callback" :"error"
+    }
+}
