@@ -1,4 +1,4 @@
 const http = require('http');
-const router = require('./request-handler');
+const router = require('./router');
 
 http.createServer(router).listen(3008);

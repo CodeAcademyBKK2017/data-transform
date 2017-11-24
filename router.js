@@ -15,7 +15,7 @@ const router = (req, res) => {
         }
         case 'GET:/user-data': {
             output = getUserDataRequestHandler(req, res, urlParsed);
-            break;
+            break; 
         }
         default: {
             output = 'URL not found.';
@@ -34,7 +34,7 @@ const firstUserRequestHandler = (req, res, urlParsed) => {
         sortedUsers.sort((userA, userB) => userB.name < userA.name);
     }
         
-    return sortedUsers[0].name;
+    return sortedUsers[0].name;sdf
 }
 
 const getUserDataRequestHandler = (req, res, urlParsed) => {
