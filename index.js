@@ -28,45 +28,45 @@ const fs = require('fs');
 const info = require('./assets/info.json');
 
 const dataTransform = (req, res) => {
-    const requestData = url.parse(req.url, true);
-    if(req.method == 'GET'){
-        if(requestData.pathname == '/first-user'){
+  const requestData = url.parse(req.url, true);
+  if(req.method == 'GET'){
+    if(requestData.pathname == '/first-user'){
             
-            //console.log(info.data[0].name);
-            //console.log(requestData.query.sort);
-            if(requestData.query.sort === 'true'){
-                let sortedUsers = [...info.data];
-                sortedUsers.sort((a,b) => a.name > b.name);
+      //console.log(info.data[0].name);
+      //console.log(requestData.query.sort);
+      if(requestData.query.sort === 'true'){
+        let sortedUsers = [...info.data];
+        sortedUsers.sort((a,b) => a.name > b.name);
 
-                res.write(sortedUsers[0].name);
-            }else if(requestData.query.sort === 'false'){
-                res.write(info.data[0].name);
-            }else{
-                res.write(info.data[0].name);
-            }
+        res.write(sortedUsers[0].name);
+      }else if(requestData.query.sort === 'false'){
+        res.write(info.data[0].name);
+      }else{
+        res.write(info.data[0].name);
+      }
             
-        }else if(requestData.pathname == '/user-data'){
-            if(requestData.query.user){
-                const userCheck =  requestData.query.user;
-                let filterUser = info.data.filter((user)=>{
-                    return userCheck.toLowerCase() === user.name.toLowerCase();
-                });
-                const fileName = filterUser[0].dataFile;
-                // console.log(filterUser[0].dataFile);
-                const dataUser = fs.readFileSync(`./assets/data/${fileName}`, 'utf8');
-                //console.log(dataUser);
-                res.write(dataUser);
-            }else{
-                res.write('error');
-            }
-        }else {
-            res.write('error');
-        }
-    }else{
-        res.write('GET Only');
+    }else if(requestData.pathname == '/user-data'){
+      if(requestData.query.user){
+        const userCheck =  requestData.query.user;
+        let filterUser = info.data.filter((user)=>{
+          return userCheck.toLowerCase() === user.name.toLowerCase();
+        });
+        const fileName = filterUser[0].dataFile;
+        // console.log(filterUser[0].dataFile);
+        const dataUser = fs.readFileSync(`./assets/data/${fileName}`, 'utf8');
+        //console.log(dataUser);
+        res.write(dataUser);
+      }else{
+        res.write('error');
+      }
+    }else {
+      res.write('error');
     }
+  }else{
+    res.write('GET Only');
+  }
 
-    res.end();
-}
+  res.end();
+};
 
 module.exports = dataTransform;
