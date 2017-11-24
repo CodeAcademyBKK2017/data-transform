@@ -1,4 +1,4 @@
-const router = require('../router')
+const router = require('../router');
 
 test('GET: /first-user - Should be response Teresa', () => {
     const res = { write: jest.fn(), end: jest.fn() };

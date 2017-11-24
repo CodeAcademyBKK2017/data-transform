@@ -6,12 +6,16 @@
   "scripts": {
     "start": "nodemon  server.js",
     "test": "jest",
-    "test:watch": "jest --watchAll"
+    "test:watch": "jest --watchAll",
+    "lint": "eslint"
   },
   "author": "",
   "license": "ISC",
   "devDependencies": {
     "jest": "^21.2.1",
     "nodemon": "^1.12.1"
+  },
+  "dependencies": {
+    "eslint": "^4.11.0"
   }
 }
