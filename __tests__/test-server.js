@@ -73,3 +73,20 @@ test('API user-data is called and get Data in file With POST', () => {
     expect(res.write).toBeCalledWith("GET ONLY!");
     expect(res.end).toHaveBeenCalled();
 })
+
+test('API first-user is called With POST', () => {
+    const req = {
+        url:"/first-user/",
+        method:"POST"
+    }
+    const res ={
+        write:jest.fn(),
+        end:jest.fn()
+    }
+
+    API(req,res);
+    
+    expect(res.write).toHaveBeenCalled();
+    expect(res.write).toBeCalledWith("GET ONLY!");
+    expect(res.end).toHaveBeenCalled();
+})

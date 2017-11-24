@@ -10,7 +10,6 @@ const getFristName = (res,q) =>{
             arrayOfJson.push(data[i].name)  
        }
        arrayOfJson.sort();
-    
        return arrayOfJson[0]
     }else{
         return json.data[0].name

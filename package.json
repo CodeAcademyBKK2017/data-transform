@@ -4,6 +4,7 @@
   "description": "",
   "main": "index.js",
   "scripts": {
+    "start": "nodemon index.js",
     "test": "jest --coverage",
     "test:watch": "jest --watchAll"
   },
@@ -14,9 +15,11 @@
   },
   "author": "",
   "license": "ISC",
-  "devDependencies": {},
+  "devDependencies": {
+    "nodemon": "^1.12.1",
+    "yarn": "^1.3.2"
+  },
   "dependencies": {
-    "jest": "^21.2.1",
-    "nodemon": "^1.12.1"
+    "jest": "^21.2.1"
   }
 }
