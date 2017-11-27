@@ -113,3 +113,43 @@ test('it work /user-data?userTest=Teresa', () => {
     expect(res.write).toHaveBeenLastCalledWith('error');
     expect(res.end).toHaveBeenCalled();
 });
+
+test('it work /user-merged-data?user=Teresa', () => {
+    const req = {
+        url: '/user-merged-data?user=Teresa',
+        method: 'GET'
+    };
+    const res = {
+        write: jest.fn(),
+        end: jest.fn()
+    }
+
+    let dataJson = {
+        metaData: '1yiyqeiwyqiuey',
+        data: 'This contains metadata for TERESA\nSample data for TERESA\n67 53 98 23 121\n12 23 43 12 45'
+    }
+
+    return dataTransform(req, res).then((data) => {
+        //expect(res.write).toHaveBeenCalled();
+        expect(data).toMatchObject(dataJson);
+        expect(res.end).toHaveBeenCalled();
+    });
+  
+});
+
+test('it work /user-merged-data?userTest=Teresa not work', () => {
+    const req = {
+        url: '/user-merged-data?userTest=Teresa1111',
+        method: 'GET'
+    };
+    const res = {
+        write: jest.fn(),
+        end: jest.fn()
+    }
+
+    dataTransform(req, res);
+    expect(res.write).toHaveBeenCalled();
+    expect(res.write).toHaveBeenLastCalledWith('error');
+    expect(res.end).toHaveBeenCalled();
+  
+});

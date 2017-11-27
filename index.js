@@ -40,6 +40,28 @@ const readFilePromiss = (filePath) => {
   });
 };
 
+const fileNameDataPromise = (filePath) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if(err){
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+};
+
+const fileNameMetaDataPromise = (filePath) => {
+  return new Promise((resolve, reject) => {
+    fs.readFile(filePath, 'utf8', (err, data) => {
+      if(err){
+        reject(err);
+      }
+      resolve(data);
+    });
+  });
+};
+
 const dataTransform = (req, res) => {
   const requestData = url.parse(req.url, true);
   if(req.method == 'GET'){
@@ -85,6 +107,31 @@ const dataTransform = (req, res) => {
         res.write('error');
         res.end();
         
+      }
+    }else if(requestData.pathname == '/user-merged-data'){
+      if(requestData.query.user){
+        const userCheck =  requestData.query.user;
+        let filterUser = info.data.filter((user)=>{
+          return userCheck.toLowerCase() === user.name.toLowerCase();
+        });
+        const fileNameData = `./assets/data/${filterUser[0].dataFile}`;
+        const fileNameMetaData = `./assets/metadata/${filterUser[0].metadata}`;
+
+        return Promise.all([fileNameDataPromise(fileNameData), fileNameMetaDataPromise(fileNameMetaData)])
+        .then(([p1Result, p2Result]) => {
+            //console.log(p1Result, p2Result);
+            let result = {};
+            result['metaData'] = JSON.parse(p2Result).key;
+            result['data'] = p1Result;
+            //console.log(result);
+            //res.write(result);
+            res.end();
+            return result;
+        });
+      
+      }else{
+        res.write('error');
+        res.end();
       }
     }else {
       res.write('error');
