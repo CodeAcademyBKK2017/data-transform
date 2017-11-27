@@ -90,13 +90,15 @@ test('it work /user-data?user=Teresa', () => {
         end: jest.fn()
     }
 
-    dataTransform(req, res);
-    expect(res.write).toHaveBeenCalled();
-    expect(res.write).toHaveBeenLastCalledWith('This contains metadata for TERESA\nSample data for TERESA\n67 53 98 23 121\n12 23 43 12 45');
-    expect(res.end).toHaveBeenCalled();
+    return dataTransform(req, res).then(() => {
+        expect(res.write).toHaveBeenCalled();
+        expect(res.write).toHaveBeenLastCalledWith('This contains metadata for TERESA\nSample data for TERESA\n67 53 98 23 121\n12 23 43 12 45');
+        expect(res.end).toHaveBeenCalled();
+    });
+  
 });
 
-test('it work /user-data?user=Teresa', () => {
+test('it work /user-data?userTest=Teresa', () => {
     const req = {
         url: '/user-data?userTest=Teresa',
         method: 'GET'
